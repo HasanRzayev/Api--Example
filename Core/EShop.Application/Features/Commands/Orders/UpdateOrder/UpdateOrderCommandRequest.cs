@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EShop.Application.Features.Commands.Products.UpdateCatagory
+namespace EShop.Application.Features.Commands.Orders.UpdateCatagory
 {
     public class UpdateOrderCommandRequest : IRequest<UpdateOrderCommandResponse>
     {
@@ -14,5 +14,7 @@ namespace EShop.Application.Features.Commands.Products.UpdateCatagory
         public string Desc { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
+
+
     }
 }

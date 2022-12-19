@@ -1,4 +1,5 @@
-﻿using EShop.Application.Repositories.ProductRepository;
+﻿using EShop.Application.Repositories.OrderRepository;
+using EShop.Application.Repositories.ProductRepository;
 using EShop.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,27 +9,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EShop.Application.Features.Commands.Products.DeleteOrder
+namespace EShop.Application.Features.Commands.Orders.DeleteOrder
 {
 
     public class DeleteOrderCommanHandler : IRequestHandler<DeleteOrderCommandRequest, DeleteOrderCommandResponse>
     {
-        private readonly IProductWriteRepository productWriteRepository;
+        private readonly IOrderWriteRepository orderWriteRepository;
 
-        public DeleteOrderCommanHandler(IProductWriteRepository productWriteRepository)
+        public DeleteOrderCommanHandler(IOrderWriteRepository orderWriteRepository)
         {
-            this.productWriteRepository = productWriteRepository;
+            this.orderWriteRepository = orderWriteRepository;
         }
 
         
         public async Task<DeleteOrderCommandResponse> Handle(DeleteOrderCommandRequest command, CancellationToken cancellationToken)
         {
 
-            await productWriteRepository.RemoveAsync(command.Id.ToString());
+            await orderWriteRepository.RemoveAsync(command.Id.ToString());
             //var product = await productWriteRepository.Where(a => a.Id == command.Id).FirstOrDefaultAsync();
             //if (product == null) return default;
             //_context.Products.Remove(product);
-            await productWriteRepository.SaveChangesAsync();
+            await orderWriteRepository.SaveChangesAsync();
             return new();
         }
 

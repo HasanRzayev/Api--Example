@@ -13,21 +13,20 @@ namespace EShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class OrderController : ControllerBase
     {
-        private readonly IProductReadRepository productReadRepository;
-        private readonly IProductWriteRepository productWriteRepository;
+        private readonly IProductReadRepository orderReadRepository;
+        private readonly IProductWriteRepository orderWriteRepository;
         private readonly IMediator mediator;
 
-        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMediator mediator)
+        public OrderController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMediator mediator)
         {
-            this.productReadRepository = productReadRepository;
-            this.productWriteRepository = productWriteRepository;
+            this.orderReadRepository = productReadRepository;
+            this.orderWriteRepository = productWriteRepository;
             this.mediator = mediator;
         }
 
 
-     
 
 
         [HttpGet("getall")]
