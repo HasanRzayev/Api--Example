@@ -11,7 +11,9 @@ namespace EShop.Domain.Entities
     {
         public string Description { get; set; }
         public string Address { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public Product product { get; set; }
+        public Guid product_id { get; set; }
+        public Guid customer_id { get; set; }
         public Customer Customer { get; set; }
     }
 }

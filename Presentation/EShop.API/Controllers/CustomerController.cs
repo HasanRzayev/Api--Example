@@ -1,10 +1,8 @@
-﻿using EShop.Application.Features.Commands.Orders.AddOrder;
-using EShop.Application.Features.Commands.Orders.DeleteOrder;
-using EShop.Application.Features.Commands.Orders.UpdateCatagory;
-
-using EShop.Application.Features.Queries.Orders.GetAllOrders;
-using EShop.Application.Repositories.OrderRepository;
-using EShop.Application.Repositories.OrderRepository;
+﻿using EShop.Application.Features.Commands.Customers.AddCustomer;
+using EShop.Application.Features.Commands.Customers.DeleteCustomer;
+using EShop.Application.Features.Commands.Customers.UpdateCustomer;
+using EShop.Application.Features.Queries.Customers.GetAllCustomers;
+using EShop.Application.Repositories.CustomerRepository;
 using EShop.Application.ViewModels;
 using EShop.Domain.Entities;
 using MediatR;
@@ -15,16 +13,16 @@ namespace EShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class CustomerController : ControllerBase
     {
-        private readonly IOrderReadRepository orderReadRepository;
-        private readonly IOrderWriteRepository orderWriteRepository;
+        private readonly ICustomerReadRepository orderReadRepository;
+        private readonly ICustomerWriteRepository orderWriteRepository;
         private readonly IMediator mediator;
 
-        public OrderController(IOrderReadRepository OrderReadRepository, IOrderWriteRepository OrderWriteRepository, IMediator mediator)
+        public CustomerController(ICustomerReadRepository CustomerReadRepository, ICustomerWriteRepository CustomerWriteRepository, IMediator mediator)
         {
-            this.orderReadRepository = OrderReadRepository;
-            this.orderWriteRepository = OrderWriteRepository;
+            this.orderReadRepository = CustomerReadRepository;
+            this.orderWriteRepository = CustomerWriteRepository;
             this.mediator = mediator;
         }
 
@@ -32,9 +30,9 @@ namespace EShop.API.Controllers
 
 
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAll([FromQuery] GetOrdersQueryRequest request)
+        public async Task<IActionResult> GetAll([FromQuery] GetCustomersQueryRequest request)
         {
-            //baseurl/api/Orders/getall
+            //baseurl/api/Customers/getall
             try
             {
                 var response = await mediator.Send(request);
@@ -49,7 +47,7 @@ namespace EShop.API.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] AddOrderCommandRequest request)
+        public async Task<IActionResult> Add([FromBody] AddCustomerCommandRequest request)
         {
             try
             {
@@ -71,7 +69,7 @@ namespace EShop.API.Controllers
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromBody] DeleteOrderCommandRequest request)
+        public async Task<IActionResult> Delete([FromBody] DeleteCustomerCommandRequest request)
         {
             try
             {
@@ -91,7 +89,7 @@ namespace EShop.API.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromBody] UpdateOrderCommandRequest request)
+        public async Task<IActionResult> Update([FromBody] UpdateCustomerCommandRequest request)
         {
             try
             {
@@ -113,22 +111,22 @@ namespace EShop.API.Controllers
         //[HttpGet]
         //public async Task Get()
         //{
-        //    await OrderWriteRepository.AddRangeAsync(new()
+        //    await CustomerWriteRepository.AddRangeAsync(new()
         //    {
-        //        new(){Id = Guid.NewGuid(), CreatedTime = DateTime.UtcNow, UpdatedTime= DateTime.UtcNow, Name = "Order", Stock  = 1, Description = "Babat", Price = 5.6m},
-        //        new(){Id = Guid.NewGuid(), CreatedTime = DateTime.UtcNow, UpdatedTime= DateTime.UtcNow, Name = "Order1", Stock  = 2, Description = "Babat1", Price = 51.6m},
-        //        new(){Id = Guid.NewGuid(), CreatedTime = DateTime.UtcNow, UpdatedTime= DateTime.UtcNow, Name = "Order2", Stock  = 3, Description = "Babat2", Price = 54.6m},
+        //        new(){Id = Guid.NewGuid(), CreatedTime = DateTime.UtcNow, UpdatedTime= DateTime.UtcNow, Name = "Customer", Stock  = 1, Description = "Babat", Price = 5.6m},
+        //        new(){Id = Guid.NewGuid(), CreatedTime = DateTime.UtcNow, UpdatedTime= DateTime.UtcNow, Name = "Customer1", Stock  = 2, Description = "Babat1", Price = 51.6m},
+        //        new(){Id = Guid.NewGuid(), CreatedTime = DateTime.UtcNow, UpdatedTime= DateTime.UtcNow, Name = "Customer2", Stock  = 3, Description = "Babat2", Price = 54.6m},
         //    });
-        //    await OrderWriteRepository.SaveChangesAsync();
+        //    await CustomerWriteRepository.SaveChangesAsync();
         //}
 
         //[HttpPost]
         //public async Task<IActionResult> Get(string id)
         //{
-        //    var Order = await OrderReadRepository.Get(id, tracking: false);
-        //    Order.Description = "chox chox babat Order";
-        //    await OrderWriteRepository.SaveChangesAsync();
-        //    return Ok(Order);
+        //    var Customer = await CustomerReadRepository.Get(id, tracking: false);
+        //    Customer.Description = "chox chox babat Customer";
+        //    await CustomerWriteRepository.SaveChangesAsync();
+        //    return Ok(Customer);
         //}
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EShop.Application.Features.Commands.Orders.AddOrder
 {
@@ -21,14 +22,15 @@ namespace EShop.Application.Features.Commands.Orders.AddOrder
             this.orderWriteRepository = orderWriteRepository;
         }
 
-        public async Task<AddOrderCommandResponse> Handle(AddOrderCommandRequest request, CancellationToken cancellationToken)
+        public async Task<AddOrderCommandResponse> Handle(AddOrderCommandRequest  request, CancellationToken cancellationToken)
         {
 
             var order = new Order
             {
-              
-                Description=request.Description,
-                Address=request.Address,
+                Description = request.Description,
+                product_id = request.product_id,
+                customer_id = request.customer_id,
+                Address = request.Address,
             };
 
             await orderWriteRepository.AddAsync(order);

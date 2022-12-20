@@ -9,12 +9,11 @@ namespace EShop.Application.Features.Commands.Orders.UpdateCatagory
 {
     public class UpdateOrderCommandRequest : IRequest<UpdateOrderCommandResponse>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Desc { get; set; }
-        public decimal Price { get; set; }
-        public int Stock { get; set; }
+        public Guid Id { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
 
+        public Guid product_id { get; set; }
 
     }
 }

@@ -13,7 +13,7 @@ namespace EShop.Domain.Entities
         public string Description { get; set; }
         public int Stock { get; set; }
         public decimal Price { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
 
     }

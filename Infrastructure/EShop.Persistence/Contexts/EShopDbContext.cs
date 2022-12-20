@@ -43,8 +43,13 @@ namespace EShop.Persistence.Contexts
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Product>()
                 .HasMany(s => s.Orders)
-                .WithMany(g => g.Products);
-                
+                .WithOne(g => g.product)
+                .HasForeignKey(a => a.product_id);
+            modelBuilder.Entity<Customer>()
+           .HasMany(s => s.Orders)
+           .WithOne(g => g.Customer)
+           .HasForeignKey(a => a.customer_id);
+
 
 
 

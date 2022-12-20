@@ -1,4 +1,6 @@
-﻿using EShop.Application.Repositories.ProductRepository;
+﻿using EShop.Application.Features.Commands.Orders.UpdateCatagory;
+using EShop.Application.Repositories.OrderRepository;
+using EShop.Application.Repositories.ProductRepository;
 using EShop.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,31 +15,29 @@ using System.Threading.Tasks;
 namespace EShop.Application.Features.Commands.Products.UpdateProduct
 {
 
-    public class UpdateProductCommanHandler : IRequestHandler<UpdateProductCommandRequest, UpdateProductCommandResponse>
+    public class UpdateOrderCommanHandler : IRequestHandler<UpdateOrderCommandRequest, UpdateOrderCommandResponse>
     {
-        private readonly IProductWriteRepository productWriteRepository;
+        private readonly IOrderWriteRepository orderWriteRepository;
 
-        public UpdateProductCommanHandler(IProductWriteRepository productWriteRepository)
+        public UpdateOrderCommanHandler(IOrderWriteRepository orderWriteRepository)
         {
                
-            this.productWriteRepository = productWriteRepository;
+            this.orderWriteRepository = orderWriteRepository;
         }
 
         
-        public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest command, CancellationToken cancellationToken)
+        public async Task<UpdateOrderCommandResponse> Handle(UpdateOrderCommandRequest command, CancellationToken cancellationToken)
         {
-            await productWriteRepository.RemoveAsync(command.Id.ToString());
-            var product = new Product
+            await orderWriteRepository.RemoveAsync(command.Id.ToString());
+            var order = new Order
             {
-                Id = command.Id,
-                Name = command.Name,
-                Description = command.Desc,
-                Price = command.Price,
-                Stock = command.Stock
+                Description = command.Description,
+                product_id = command.product_id,
+                Address = command.Address,
             };
-            await productWriteRepository.AddAsync(product);
+            await orderWriteRepository.AddAsync(order);
 
-            await productWriteRepository.SaveChangesAsync();
+            await orderWriteRepository.SaveChangesAsync();
             return new();
         }
 

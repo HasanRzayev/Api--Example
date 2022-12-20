@@ -9,7 +9,8 @@ namespace EShop.Application.Features.Commands.Orders.AddOrder
 {
     public class AddOrderCommandRequest : IRequest<AddOrderCommandResponse>
     {
-        public string product_id   { get; set; }
+        public Guid product_id   { get; set; }
+        public Guid customer_id   { get; set; }
 
         public string Description   { get; set; }
         public string Address      { get; set; }
