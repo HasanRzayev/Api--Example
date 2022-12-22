@@ -11,6 +11,6 @@ namespace EShop.Application.Features.Commands.Customers.AddCustomer
     {
 
         
-        public string Name      { get; set; }
+        public string Name { get; set; }
     }
 }

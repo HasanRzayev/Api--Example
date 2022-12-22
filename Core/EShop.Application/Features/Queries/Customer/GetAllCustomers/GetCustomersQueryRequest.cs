@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EShop.Application.Features.Queries.Customers.GetAllCustomers
+namespace EShop.Application.Features.Queries.Customer.GetAllCustomers
 {
 
     public class GetCustomersQueryRequest : IRequest<GetCustomersQueryResponse>

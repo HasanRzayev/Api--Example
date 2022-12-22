@@ -17,7 +17,7 @@ namespace EShop.Application.Features.Commands.Customers.AddCustomer
     {
         private readonly ICustomerWriteRepository customerWriteRepository;
 
-        public AddCustomerCommandHandler(IOrderWriteRepository orderWriteRepository)
+        public AddCustomerCommandHandler(ICustomerWriteRepository customerWriteRepository)
         {
             this.customerWriteRepository = customerWriteRepository;
         }
@@ -25,7 +25,7 @@ namespace EShop.Application.Features.Commands.Customers.AddCustomer
         public async Task<AddCustomerCommandResponse> Handle(AddCustomerCommandRequest request, CancellationToken cancellationToken)
         {
 
-            var customer = new Customer
+            var customer = new EShop.Domain.Entities.Customer
             {
               Name = request.Name,
             };

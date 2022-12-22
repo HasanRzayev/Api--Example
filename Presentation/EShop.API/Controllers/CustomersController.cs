@@ -1,7 +1,7 @@
 ﻿using EShop.Application.Features.Commands.Customers.AddCustomer;
 using EShop.Application.Features.Commands.Customers.DeleteCustomer;
 using EShop.Application.Features.Commands.Customers.UpdateCustomer;
-using EShop.Application.Features.Queries.Customers.GetAllCustomers;
+using EShop.Application.Features.Queries.Customer.GetAllCustomers;
 using EShop.Application.Repositories.CustomerRepository;
 using EShop.Application.ViewModels;
 using EShop.Domain.Entities;
@@ -13,13 +13,13 @@ namespace EShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly ICustomerReadRepository orderReadRepository;
         private readonly ICustomerWriteRepository orderWriteRepository;
         private readonly IMediator mediator;
 
-        public CustomerController(ICustomerReadRepository CustomerReadRepository, ICustomerWriteRepository CustomerWriteRepository, IMediator mediator)
+        public CustomersController(ICustomerReadRepository CustomerReadRepository, ICustomerWriteRepository CustomerWriteRepository, IMediator mediator)
         {
             this.orderReadRepository = CustomerReadRepository;
             this.orderWriteRepository = CustomerWriteRepository;
@@ -46,7 +46,7 @@ namespace EShop.API.Controllers
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] AddCustomerCommandRequest request)
         {
             try

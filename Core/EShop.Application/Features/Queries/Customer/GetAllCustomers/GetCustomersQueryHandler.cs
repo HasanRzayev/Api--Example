@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EShop.Application.Repositories.CustomerRepository;
 
-namespace EShop.Application.Features.Queries.Customers.GetAllCustomers
+namespace EShop.Application.Features.Queries.Customer.GetAllCustomers
 {
     public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQueryRequest, GetCustomersQueryResponse>
     {
