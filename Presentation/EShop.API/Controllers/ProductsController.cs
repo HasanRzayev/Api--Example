@@ -6,6 +6,7 @@ using EShop.Application.Repositories.ProductRepository;
 using EShop.Application.ViewModels;
 using EShop.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -13,6 +14,7 @@ namespace EShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductReadRepository productReadRepository;
