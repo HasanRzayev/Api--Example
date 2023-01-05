@@ -1,4 +1,4 @@
-﻿using EShop.API.Helper.Generation;
+﻿
 using EShop.Domain.ViewModels;
 using EShop.Application.Features.Commands.Customers.AddCustomer;
 using EShop.Application.Features.Commands.Customers.DeleteCustomer;
@@ -13,6 +13,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
+using EShop.Application.Repositories;
+using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
+using CloudinaryDotNet.Actions;
+using PhotoHome.Helpers;
 
 namespace EShop.API.Controllers
 {
@@ -20,48 +25,81 @@ namespace EShop.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
- 
 
+        public static Cloudinary cloudinary;
+
+        public const string CLOUD_NAME = "dhtcecrpa";
+        public const string API_KEY = "621668164995499";
+        public const string API_SECRET = "iLcKxUn6rR_cq9qWiTOV8e9H2VY";
+        private readonly IJWTManagerRepository _jWTManager;
+
+       
         private readonly IConfiguration _config;
 
-        public UserController(IConfiguration config)
+        public UserController(IConfiguration config, IJWTManagerRepository jWTManager)
         {
             _config = config;
+            this._jWTManager = jWTManager;
+        }
+        public void uploadImage(string imagePath)
+        {
+
+            try
+            {
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(imagePath)
+                };
+
+                var uploadResult = cloudinary.Upload(uploadParams);
+
+           
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+        //[HttpPost, ActionName("AddImage")]
+        public async Task<IActionResult> AddImage(IFormFile image)
+        {
+
+            var path = await UploadFileHelper.UploadFile(image);
+
+
+            Account account = new(CLOUD_NAME, API_KEY, API_SECRET);
+
+            cloudinary = new Cloudinary(account);
+
+
+            string imagePath = path;
+
+            uploadImage(imagePath);
+
+
+
+
+            return RedirectToAction("Create");
+
         }
 
         [AllowAnonymous]
-        [HttpPost("[action]")]
-        public IActionResult Login([FromBody] UserViewModel dto)
+        [HttpPost]
+        [Route("authenticate")]
+        public IActionResult Authenticate(Users usersdata)
         {
-            var user = UserRepository.GetUser(dto);
-            if (user != null)
-            {
-                var token = TokenService.GenerateToken(user, _config);
-                return Ok(token);
-            }
-            return NotFound("notfound");
-        }
+            var token = _jWTManager.Authenticate(usersdata);
 
-        [HttpGet("some")]
-        public IActionResult SomeMethod()
-        {
-            var user = GetUser();
-            return Ok($"Salam {user?.UserName}");
-        }
-
-        private User GetUser()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            if (token == null)
             {
-                var userClaims = identity.Claims;
-                return new User
-                {
-                    UserName = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
-                    Role = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
-                };
+                return Unauthorized();
             }
-            return null;
+
+            return Ok(token);
         }
     }
 }
